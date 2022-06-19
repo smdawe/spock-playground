@@ -20,7 +20,11 @@ dependencies {
   implementation 'net.logstash.logback:logstash-logback-encoder:7.1.1'
   implementation 'ch.qos.logback:logback-classic:1.2.11'
 
-  testImplementation "org.spockframework:spock-core:2.1-groovy-3.0"
+  testImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
+  testImplementation 'org.spockframework:spock-spring:2.1-groovy-3.0'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.codehaus.groovy:groovy-json:3.0.11'
+
 
 }
 

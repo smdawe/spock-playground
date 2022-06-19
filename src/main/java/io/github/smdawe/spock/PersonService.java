@@ -26,7 +26,7 @@ public class PersonService {
 
   public Person get(String id) {
     if (!validateId(id)) {
-      throw new RuntimeException("ID " + id + " is not valid");
+      throw new PersonException("ID " + id + " is not valid");
     }
 
     return this.personRepository.get(id);

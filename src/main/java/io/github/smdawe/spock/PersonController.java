@@ -7,11 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -33,7 +31,7 @@ public class PersonController {
     ResponseEntity<Void> save(@RequestBody Person person) {
         try {
             String id = personService.save(person);
-            return ResponseEntity.created(new URI("/" + id)).build();
+            return ResponseEntity.created(new URI("/person/" + id)).build();
         } catch (Throwable t) {
             LOG.error(t.getLocalizedMessage(), t);
             return ResponseEntity.internalServerError().build();

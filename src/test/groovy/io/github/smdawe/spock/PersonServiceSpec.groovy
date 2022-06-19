@@ -25,6 +25,14 @@ class PersonServiceSpec extends Specification {
       result
   }
 
+  void 'get a person - invalid id'() {
+    when:
+      personService.get('blah')
+
+    then:
+      thrown PersonException
+  }
+
   void 'save a person - throw exception'() {
     given:
       Person person = new Person()
