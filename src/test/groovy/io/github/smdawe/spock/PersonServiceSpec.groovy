@@ -45,11 +45,14 @@ class PersonServiceSpec extends Specification {
     where:
       id        | result
       'P1234'   | true
+      'P2134'   | true
+      'P2351'   | true
       'P12345'  | false
       ''        | false
       '1234P'   | false
       'A1234'   | false
-      'P2351'   | true
+      null      | false
+
   }
 
   void 'generate id'() {

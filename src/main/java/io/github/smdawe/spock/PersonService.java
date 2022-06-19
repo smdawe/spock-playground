@@ -33,7 +33,28 @@ public class PersonService {
   }
 
   private static boolean validateId(String id) {
-    return id.matches("P\\d+4");
+    //return id.matches("P\\d+4");
+    if (id == null) {
+      return false;
+    }
+
+    if (id.length() != 5) {
+      return false;
+    }
+
+    if (id.startsWith("P")) {
+      String lastChars = id.substring(id.length() - 4);
+
+      try {
+        Integer.valueOf(lastChars);
+      } catch (Exception e) {
+        return false;
+      }
+
+      return true;
+    }
+
+    return false;
   }
 
   private static String generateId() {
