@@ -49,6 +49,7 @@ class PersonServiceSpec extends Specification {
       ''        | false
       '1234P'   | false
       'A1234'   | false
+      'P2351'   | true
   }
 
   void 'generate id'() {

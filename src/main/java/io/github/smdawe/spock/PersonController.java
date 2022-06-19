@@ -40,7 +40,7 @@ public class PersonController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Person> get(@PathVariable String id) {
         try {
             Optional<Person> person = Optional.ofNullable(personService.get(id));
