@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class PersonService {
 
+
   private static final Random RANDOM = new Random();
   private static final String ID_START_CHAR = "P";
 
@@ -26,9 +27,8 @@ public class PersonService {
   }
 
   // valid ids ust start with P followed by 4 digits
-  private static boolean validateId(String id) {
-    return id.matches("P\\d+4");
-  }
+
+
 
   private static String generateId() {
     String id = String.format("%04d", RANDOM.nextInt(10000));
