@@ -1,6 +1,9 @@
 plugins {
   id 'java'
   id 'groovy'
+  id 'org.springframework.boot' version '2.7.0'
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+
 }
 
 repositories {
@@ -8,9 +11,12 @@ repositories {
 }
 
 dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 
   implementation 'org.slf4j:slf4j-api:1.7.36'
-
   implementation 'net.logstash.logback:logstash-logback-encoder:7.1.1'
   implementation 'ch.qos.logback:logback-classic:1.2.11'
 

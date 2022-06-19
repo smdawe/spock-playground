@@ -1,13 +1,17 @@
 package io.github.smdawe.spock;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Random;
 
+@Service
 public class PersonService {
-
 
   private static final Random RANDOM = new Random();
   private static final String ID_START_CHAR = "P";
 
+  @Autowired
   private PersonRepository personRepository;
 
   public PersonService(PersonRepository personRepository) {
@@ -15,6 +19,8 @@ public class PersonService {
   }
 
   public String save(Person person) {
+    person.setId(generateId());
+
     return this.personRepository.save(person).getId();
   }
 
@@ -26,9 +32,9 @@ public class PersonService {
     return this.personRepository.get(id);
   }
 
-  // valid ids ust start with P followed by 4 digits
-
-
+  private static boolean validateId(String id) {
+    return id.matches("P\\d+4");
+  }
 
   private static String generateId() {
     String id = String.format("%04d", RANDOM.nextInt(10000));
