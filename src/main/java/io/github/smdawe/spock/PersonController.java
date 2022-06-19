@@ -30,11 +30,9 @@ public class PersonController {
     private PersonService personService;
 
     @RequestMapping(method = RequestMethod.POST)
-    ResponseEntity<Void> save(@RequestBody Map<String, String> person) {
+    ResponseEntity<Void> save(@RequestBody Person person) {
         try {
-            Person p = new Person();
-            p.setName(person.get("name"));
-            String id = personService.save(p);
+            String id = personService.save(person);
             return ResponseEntity.created(new URI("/" + id)).build();
         } catch (Throwable t) {
             LOG.error(t.getLocalizedMessage(), t);
