@@ -25,11 +25,11 @@ public class PersonFileRepository implements PersonRepository {
         try {
             File file = new File(baseDir, person.getId());
             Files.write(file.toPath(), objectMapper.writeValueAsBytes(person));
+            return person;
         } catch (IOException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
+            return null;
         }
-
-        return person;
     }
 
     @Override

@@ -7,31 +7,36 @@ import spock.lang.Specification
 import java.nio.file.Files
 
 class PersonFileRepositorySpec extends Specification {
+    // shared allows us to persist state of objects across tests
+    // useful for clients, directories or anything we don't want to recreate each time
     @Shared
     File testDir
 
     PersonFileRepository personFileRepository
 
+    // called at the start of the tests and only run once
     void setupSpec() {
         testDir = new File(System.currentTimeMillis().toString());
         testDir.mkdir();
     }
 
-
+    // called at the end of the tests
     void cleanupSpec() {
         for (File file : Objects.requireNonNull(testDir.listFiles())) {
             if (!file.isDirectory()) {
                 file.delete();
             }
         }
+        testDir.deleteDir()
     }
 
+    // called before each test
     void setup() {
         personFileRepository = new PersonFileRepository(testDir)
     }
 
     void 'save person'() {
-        given:
+        given: // tap lets us set properties on an and return the object at the end
             Person person = new Person().tap {id = UUID.randomUUID().toString() }
 
         when:
@@ -42,7 +47,7 @@ class PersonFileRepositorySpec extends Specification {
     }
 
     void 'overwrite person'() {
-        given:
+        given: // tap lets us set properties on an and return the object at the end
             Person person = new Person().tap {id = UUID.randomUUID().toString() }
 
         when:
@@ -57,7 +62,7 @@ class PersonFileRepositorySpec extends Specification {
     }
 
     void 'load person'() {
-        given:
+        given: // tap lets us set properties on an and return the object at the end
             Person person = new Person().tap {id = UUID.randomUUID().toString() }
             savePerson(person)
 
@@ -72,7 +77,7 @@ class PersonFileRepositorySpec extends Specification {
         when:
             Person result = personFileRepository.get('random')
 
-        then:
+        then: // groovy truthy null can be tested as being false
             !result
     }
 

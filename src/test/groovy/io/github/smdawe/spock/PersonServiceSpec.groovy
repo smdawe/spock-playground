@@ -9,6 +9,7 @@ class PersonServiceSpec extends Specification {
   PersonService personService
 
   void setup() {
+    // uses its own mock no mockito BS
     personRepository = Mock(PersonRepository)
     personService = new PersonService(personRepository)
   }
@@ -16,12 +17,14 @@ class PersonServiceSpec extends Specification {
   void 'save a person'() {
     given:
       Person person = new Person()
-      personRepository.save(person) >> { new Person().tap {id = 'P1234'} }
+      // when the save method is called with a person return the person
+      // { person } is a groovy closure
+      personRepository.save(person) >> { person }
 
     when:
       String result = personService.save(person)
 
-    then:
+    then: // just vaidate that the person is not null
       result
   }
 
@@ -29,13 +32,18 @@ class PersonServiceSpec extends Specification {
     when:
       personService.get('blah')
 
-    then:
+    then: // call the thrown method with the exception we expect
+      // in groovy the last parameter to a method does not need to be in brackets
+      // could also be thrown(PersonException) there is also no need for .class on the end, groovy hey!
       thrown PersonException
+      // verify that the get method was never called, _ denotes any object
+      0 * personRepository.get(_)
   }
 
   void 'save a person - throw exception'() {
     given:
       Person person = new Person()
+      // rather than return an object we now have a closure that throws an exception
       personRepository.save(person) >> { throw new RuntimeException() }
 
     when:
@@ -45,12 +53,13 @@ class PersonServiceSpec extends Specification {
       thrown Exception
   }
 
+  // unroll lets us report each invocation as a separate result
   @Unroll("#id results in #result")
   void 'valid person id'() {
     expect:
       PersonService.validateId(id) == result
 
-    where:
+    where: // the arguments to the above test
       id        | result
       'P1234'   | true
       'P2134'   | true
@@ -77,10 +86,5 @@ class PersonServiceSpec extends Specification {
       PersonService.generateId() != PersonService.generateId()
       PersonService.generateId() != PersonService.generateId()
       PersonService.generateId() != PersonService.generateId()
-  }
-
-  void 'blah'() {
-    expect:
-      [null, '', '11'].findAll().size()==1
   }
 }

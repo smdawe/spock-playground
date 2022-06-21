@@ -16,7 +16,7 @@ import java.net.http.HttpResponse
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest
+@SpringBootTest // works with springboot
 @AutoConfigureMockMvc
 class ApiSpec extends Specification {
 

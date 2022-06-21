@@ -3,6 +3,7 @@ package io.github.smdawe.spock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -33,7 +34,8 @@ public class PersonService {
   }
 
   private static boolean validateId(String id) {
-    //return id.matches("P\\d+4");
+    //return Optional.ofNullable(id).map(i -> i.matches("P\\d+4")).orElse(false);
+
     if (id == null) {
       return false;
     }
